@@ -220,6 +220,7 @@ public actor Agent {
 
         case "session/close":
             let params = try decodeParams(CloseSessionRequest.self, from: request.params)
+            try await delegate.handleCancel(params.sessionId)
             let response = try await delegate.handleCloseSession(params)
             return try encodeResult(response)
 
